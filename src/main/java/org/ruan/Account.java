@@ -1,16 +1,19 @@
 package org.ruan;
 import javax.persistence.*;
+import javax.swing.*;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Conta")
-public class Conta {
+@Table(name = "Account")
+public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String nome;
 
-	private Double saldo;
+	@Column(name = "saldo")
+	private BigDecimal saldo;
 
 	public Long getId() {
 		return id;
@@ -28,11 +31,11 @@ public class Conta {
 		this.nome = nome;
 	}
 
-	public Double getSaldo() {
+	public BigDecimal getSaldo() {
 		return saldo;
 	}
 
-	public void setSaldo(Double saldo) {
+	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
 	}
 }
