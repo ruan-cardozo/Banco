@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.google.zxing.common.BitMatrix;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -60,11 +60,11 @@ public class AccountController {
 	public ResponseEntity<Account> deposit(@PathVariable Long id, @RequestBody BigDecimal amount) {
 		Account account = accountService.getAccountById(id);
 		if (account == null) {
-			return  ResponseEntity.notFound().build();
+			return ResponseEntity.notFound().build();
 		}
 		account.setSaldo(account.getSaldo().add(amount));
 		Account updateAccount = accountService.updateAccount(id, account);
-		return  ResponseEntity.ok(updateAccount);
+		return ResponseEntity.ok(updateAccount);
 	}
 
 
@@ -83,7 +83,7 @@ public class AccountController {
 	}
 
 	@PostMapping("/pay")
-	public ResponseEntity<byte[]> pay(@RequestBody PaymentRequest paymentRequest) {
+	public ResponseEntity<byte[]> pay(@RequestBody PaymentRequest paymentRequest) throws IOException, WriterException {
 		Account account = accountService.getAccountById(paymentRequest.getAccountId());
 		if (account == null) {
 			return ResponseEntity.notFound().build();
@@ -93,17 +93,8 @@ public class AccountController {
 		if (account.getSaldo().compareTo(valueToPay) < 0) {
 			return ResponseEntity.badRequest().build();
 		}
-
-		String paymentInfo = "account id: " + paymentRequest.getAccountId() + ", value " + paymentRequest.getValue();
-		byte[] qrCode = generateQRCode(paymentInfo);
-
-		account.setSaldo(account.getSaldo().subtract(valueToPay));
-		accountService.updateAccount(account.getId(), account);
-
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_PNG_VALUE)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"payment_qr_code.png"")"
-				.body(qrCode);
+		return null;
+	}
 }
 
 

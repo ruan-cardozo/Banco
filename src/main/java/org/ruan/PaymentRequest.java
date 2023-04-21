@@ -19,7 +19,4 @@ public class PaymentRequest {
 		return value;
 	}
 
-	public void setValue(BigDecimal value) {
-		this.value = value;
-	}
 }

@@ -2,9 +2,9 @@ package org.ruan;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class AccountService {
@@ -44,11 +44,4 @@ public class AccountService {
 		}
 		return false;
 	}
-
-	private byte[] generateQRCode(String data) {
-		ByteArrayOutputStream stream = QRCode.from(data).stream();
-		return stream.toByteArray();
-	}
-
-
 }
